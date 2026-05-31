@@ -11,11 +11,15 @@ main proc far
       
     mov ax , @data
     mov ds , ax
-         
-    L1: 
-    mov ax , 0
+    
+    mov ax , 0    
+    mov cx , lx
+    
+    L1:  
+    
+    push cx
     mov si , 0
-    mov cl , 0
+    mov cx , lx 
             
         L0:  
         mov al , x[si]
@@ -24,26 +28,24 @@ main proc far
         call swap   
            
         inc si
-        cmp si , lx
-        jnz L0       
-        cmp cl, 0
-        jnz L1
+        loop l0  
+        
+    pop cx          
+    loop L1
 
     HLT         
 main endp
 
-swap proc    
+swap proc 
+       
          cmp al , ah
-         jg swp 
-    
+         jg swp     
     D:
         ret
     swp:
         mov x[si] , ah
         mov x[si+1] ,al
         
-        inc cl
         jmp D
 
 swap endp
-
